@@ -1,0 +1,97 @@
+﻿<Window x:Class="BiblioAppEscritorio.Vistas.VentanaPrestamoInterbibliotecario.DialogoSolicitarLibro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BiblioAppEscritorio.Vistas.VentanaPrestamoInterbibliotecario"
+        xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+        mc:Ignorable="d"
+        Title="Solicitar Libro"
+        Height="336"
+        Width="628"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/cuidado.ico">
+
+    <Window.Resources>
+        <!--CONVERTER-->
+        <local1:Base64ToImageConverter x:Key="ImagenConverter"></local1:Base64ToImageConverter>
+        <!--ESTILOS-->
+        <Style TargetType="Button">
+            <Setter Property="Foreground"
+                    Value="White" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin"
+                    Value="3"></Setter>
+            <Setter Property="FontSize"
+                    Value="18"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Microsoft YaHei"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Foreground"
+                    Value="Black"></Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1"
+                             StartPoint="0.5,0">
+            <GradientStop Color="#FFF9CCCC"
+                          Offset="0" />
+            <GradientStop Color="#FF67A0FF"
+                          Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="155*" />
+            <ColumnDefinition Width="439*" />
+        </Grid.ColumnDefinitions>
+        <Image Source="{Binding Path=Imagen, Converter={StaticResource ImagenConverter}}"
+               Grid.Column="0"
+               Margin="15"
+               Height="200"
+               Stretch="Fill" />
+        <TextBlock Grid.Column="1"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center">¿Desea solicitar este libro?</TextBlock>
+        <StackPanel Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Width="429">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Foreground="#FF3238B0" Text="Título:"></TextBlock>
+                <TextBlock Text="{Binding Path=Titulo}" TextWrapping="Wrap"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Foreground="#FF3238B0" Text="ISBN:"></TextBlock>
+                <TextBlock  Text="{Binding Path=Isbn}" TextWrapping="Wrap"></TextBlock>
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,5,5"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Height="48"
+                    Width="179">
+            <Button x:Name="CancelarButton"
+                    Margin="3"
+                    Background="#FFCA53F7"
+                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                    IsCancel="True"
+                    Click="CancelarButton_Click">Cancelar</Button>
+            <Button x:Name="AcceptarButton"
+                    Margin="3"
+                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                    IsDefault="True"
+                    Background="#FF1976D2"
+                    Click="AcceptarButton_Click">Aceptar</Button>
+        </StackPanel>
+    </Grid>
+</Window>
+

@@ -1,0 +1,332 @@
+﻿<UserControl x:Class="BiblioAppEscritorio.Vistas.LibrosUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BiblioAppEscritorio.Vistas"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+             mc:Ignorable="d"
+             d:DesignWidth="1080"
+             Background="#12151a">
+    <UserControl.Resources>
+
+        <!--Converters-->
+        <local1:Base64ToImageConverter x:Key="ImageConverter"></local1:Base64ToImageConverter>
+        <local1:BotonPrestamoEnabledConverter x:Key="BotonPrestamoConverter"></local1:BotonPrestamoEnabledConverter>
+        <local1:BotonReservaVisibilidadConverter x:Key="BotonReservaConverter"></local1:BotonReservaVisibilidadConverter>
+        <local1:BotonEliminaLibroEnabledConverter x:Key="BotonEliminarLibroConverter"></local1:BotonEliminaLibroEnabledConverter>
+        <!--DataGrid Header-->
+        <Style TargetType="syncfusion:GridHeaderCellControl">
+            <Setter Property="Background"
+                    Value="#FF1A1E25" />
+            <Setter Property="Foreground"
+                    Value="#FFA5BBA5" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="17"></Setter>
+        </Style>
+
+        <Style TargetType="syncfusion:GridCell">
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Tahoma"></Setter>
+            <Setter Property="FontSize"
+                    Value="15"></Setter>
+            <Setter Property="Foreground"
+                    Value="#FF1A1E25" />
+            <Setter Property="BorderBrush"
+                    Value="#FF1A1E25"></Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}"
+               x:Key="LetrasInfo">
+            <Setter Property="Foreground"
+                    Value="#9abfef"></Setter>
+            <Setter Property="FontSize"
+                    Value="14"></Setter>
+            <Setter Property="Margin"
+                    Value="30,0,0,5"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Tahoma"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Visibility"
+                    Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=LibroSeleccionado}"
+                             Value="{x:Null}">
+                    <Setter Property="Visibility"
+                            Value="Hidden" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin"
+                    Value="8" />
+            <Setter Property="Width"
+                    Value="180" />
+            <Setter Property="Background"
+                    Value="#c0dcfc"></Setter>
+            <Setter Property="Foreground"
+                    Value="#000"></Setter>
+            <Setter Property="Margin"
+                    Value="8"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="FontSize"
+                    Value="14"></Setter>
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Left"></Setter>
+        </Style>
+
+        <Style x:Key="LibroSeleccionado"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="IsEnabled"
+                    Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=LibroSeleccionado}"
+                             Value="{x:Null}">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--Stackpanel con info de los libros-->
+        <Style TargetType="{x:Type StackPanel}"
+               x:Key="LibroSeleccionadoStackPanel">
+            <Setter Property="Visibility"
+                    Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=LibroSeleccionado}"
+                             Value="{x:Null}">
+                    <Setter Property="Visibility"
+                            Value="Hidden" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--imágenes de los botones-->
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="Height"
+                    Value="25"></Setter>
+            <Setter Property="Width"
+                    Value="25"></Setter>
+            <Setter Property="Margin"
+                    Value="15,10,10,10"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="225" />
+        </Grid.ColumnDefinitions>
+
+        <!--Lista libros-->
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top"
+                       HorizontalAlignment="Center"
+                       Margin="8"
+                       Text="Lista de Libros"
+                       FontSize="22"
+                       Foreground="#9abfef"
+                       FontWeight="Bold"></TextBlock>
+
+            <!--Datagrid-->
+            <syncfusion:SfDataGrid x:Name="LibrosDataGrid"
+                                   ColumnSizer="Star"
+                                   ShowSortNumbers="True"
+                                   AllowFiltering="True"
+                                   RowHeight="45"
+                                   HeaderRowHeight="50"
+                                   ItemsSource="{Binding Path=Libros}"
+                                   SelectedItem="{Binding Path=LibroSeleccionado}"
+                                   Foreground="#FF1A1E25"
+                                   Background="#69a5f6">
+
+                <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:GridTextColumn MappingName="titulo"
+                                               HeaderText="Título del Libro"
+                                               TextTrimming="CharacterEllipsis"
+                                               Width="400"
+                                               ValueBinding="{Binding Path=titulo}" />
+                    <syncfusion:GridTextColumn MappingName="autores"
+                                               HeaderText="Autor/es"
+                                               TextTrimming="CharacterEllipsis"
+                                               ValueBinding="{Binding Path=autores}" />
+                    <syncfusion:GridTextColumn MappingName="isbn"
+                                               HeaderText="ISBN"
+                                               TextAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"
+                                               ValueBinding="{Binding Path=isbn}" />
+                    <syncfusion:GridTextColumn MappingName="paginas"
+                                               HeaderText="Páginas"
+                                               TextAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"
+                                               ValueBinding="{Binding Path=paginas}" />
+                    <syncfusion:GridTextColumn MappingName="editorial"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextAlignment="Center"
+                                               HeaderText="Editorial"
+                                               ValueBinding="{Binding Path=editorial}" />
+                    <syncfusion:GridTextColumn MappingName="anyoPublicacion"
+                                               HeaderText="Año Publicación"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center"
+                                               ValueBinding="{Binding Path=anyoPublicacion}" />
+                    <syncfusion:GridTextColumn MappingName="idioma"
+                                               TextWrapping="Wrap"
+                                               HeaderText="Idioma"
+                                               Width="80"
+                                               TextAlignment="Center"
+                                               ValueBinding="{Binding Path=idioma}" />
+                    <syncfusion:GridTextColumn MappingName="categoria"
+                                               HeaderText="Categoría"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextAlignment="Center"
+                                               ValueBinding="{Binding Path=categoria}" />
+                    <syncfusion:GridTextColumn MappingName="subcategorias"
+                                               HeaderText="Subcategorías"
+                                               TextAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"
+                                               ValueBinding="{Binding Path=subcategorias}" />
+
+                    <syncfusion:GridTextColumn MappingName="imagen"
+                                               TextWrapping="Wrap"
+                                               HeaderText="imagen"
+                                               IsHidden="True"
+                                               ValueBinding="{Binding Path=imagen}" />
+                    <syncfusion:GridTextColumn MappingName="descripcion"
+                                               HeaderText="descripcion"
+                                               IsHidden="True"
+                                               ValueBinding="{Binding Path=descripcion}" />
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
+
+        </DockPanel>
+        <!--Botones libros-->
+        <StackPanel Grid.Column="1">
+            <StackPanel Orientation="Vertical"
+                        Style="{StaticResource LibroSeleccionadoStackPanel}">
+                <Image DockPanel.Dock="Left"
+                       Width="200"
+                       Height="250"
+                       Margin="0,20,0,5"
+                       Source="{Binding Path=LibroSeleccionado.imagen, Converter={StaticResource ImageConverter}}" />
+
+                <TextBlock Style="{StaticResource LetrasInfo}">
+                    <Run Text="Unidades disponibles: "></Run>
+                    <Run Text="{Binding Path=UnidadesDisponiblesTextBlock, UpdateSourceTrigger=PropertyChanged}"></Run>
+                </TextBlock>
+                <TextBlock Style="{StaticResource LetrasInfo}">
+                    <Run Text="Unidades reservadas: "></Run>
+                    <Run Text="{Binding Path=UnidadesReservadasTextBlock, UpdateSourceTrigger=PropertyChanged}"></Run>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Center"
+                           Foreground="#9abfef"
+                           FontSize="17"
+                           FontFamily="Tahoma"
+                           FontWeight="Bold">Unidades Totales</TextBlock>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Button Margin="10"
+                            Background="#69a5f6"
+                            Foreground="#FF1A1E25"
+                            BorderBrush="#FF1A1E25"
+                            IsEnabled="{Binding Path=BotonEliminarUnidadLibroEnabled, UpdateSourceTrigger=PropertyChanged}"
+                            Command="{Binding Path=RestaUnidadCommand}"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                        <materialDesign:PackIcon Kind="Minus" />
+                    </Button>
+                    <TextBlock Margin="10"
+                               VerticalAlignment="Center"
+                               Text="{Binding Path=UnidadesTotalesTextBlock, UpdateSourceTrigger=PropertyChanged}"
+                               Foreground="#9abfef"
+                               FontSize="24"></TextBlock>
+                    <Button Margin="10"
+                            Background="#69a5f6"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                            Foreground="#FF1A1E25"
+                            BorderBrush="#FF1A1E25"
+                            Command="{Binding Path=SumaUnidadCommand}">
+                        <materialDesign:PackIcon Kind="Plus" />
+                    </Button>
+                </StackPanel>
+                <Button x:Name="QuitarSeleccionButton"
+                        Margin="0,5,0,35"
+                        HorizontalContentAlignment="Center"
+                        Style="{StaticResource LibroSeleccionado}"
+                        Command="{Binding Path=QuitarSeleccionLibroCommand}"
+                        Background="#FFECDBA3"
+                        Content="Quitar Selección Libro" />
+            </StackPanel>
+            <Button x:Name="RefrescaListaButton"
+                    Command="{Binding Path=RefrescaListaCommand}"
+                    Background="#FFA3BAEC">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Image Source="/Assets/refresh.png" />
+                    <Label VerticalAlignment="Center">Refresca Lista</Label>
+                </StackPanel>
+            </Button>
+            <Button x:Name="AddLibroButton"
+                    IsEnabled="True"
+                    Style="{StaticResource LibroSeleccionado}"
+                    Command="{Binding Path=AddLibroCommand}"
+                    Background="#FFA5D8A5">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Image Source="/Assets/book-plus.png" />
+                    <Label VerticalAlignment="Center">Añadir Libro</Label>
+                </StackPanel>
+            </Button>
+            <Button x:Name="EditarLibroButton"
+                    Style="{StaticResource LibroSeleccionado}"
+                    Command="{Binding Path=EditarLibroCommand}">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Image Source="/Assets/book-edit.png" />
+                    <Label VerticalAlignment="Center">Editar Libro</Label>
+                </StackPanel>
+            </Button>
+            <Button x:Name="EliminarLibroButton"
+                    Style="{StaticResource LibroSeleccionado}"
+                    Command="{Binding Path=EliminarLibroCommand}"
+                    IsEnabled="{Binding Path=BotonEliminarLibroEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    Background="#FFECA3A3">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Image Source="/Assets/book-remove.png" />
+                    <Label VerticalAlignment="Center">Eliminar Libro</Label>
+                </StackPanel>
+            </Button>
+            <Button x:Name="AddPrestamoButton"
+                    Style="{StaticResource LibroSeleccionado}"
+                    IsEnabled="{Binding Path=BotonPrestamoEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    Command="{Binding Path=AddPrestamoCommand}"
+                    Background="#FFB1A5D8">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Image Source="/Assets/addprestamo.png" />
+                    <Label VerticalAlignment="Center">Añadir Préstamo</Label>
+                </StackPanel>
+            </Button>
+            <Button x:Name="AddReservaButton"
+                    Style="{StaticResource LibroSeleccionado}"
+                    IsEnabled="{Binding Path=BotonReservaEnabled, UpdateSourceTrigger=PropertyChanged}"
+                    Command="{Binding Path=AddReservaCommand}"
+                    Background="#FFD8C1A5">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+                    <Image Source="/Assets/addreserva.png" />
+                    <Label VerticalAlignment="Center">Añadir Reserva</Label>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

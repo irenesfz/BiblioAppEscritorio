@@ -1,0 +1,181 @@
+﻿<UserControl x:Class="BiblioAppEscritorio.Vistas.InicioUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BiblioAppEscritorio.Vistas"
+             xmlns:properties="clr-namespace:BiblioAppEscritorio.Properties"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="850"
+             d:DesignWidth="1000"
+             Background="#69A5F6">
+    <UserControl.Resources>
+        <local1:VisibilidadImagenEventoConverter x:Key="ImagenConverter"></local1:VisibilidadImagenEventoConverter>
+        <local1:Base64ToImageConverter x:Key="Imagen2Converter"></local1:Base64ToImageConverter>
+        <local1:FechaFormatoConverter x:Key="FechaConverter"></local1:FechaFormatoConverter>
+        <!--Textos navigation drawer-->
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="FontSize"
+                    Value="18"></Setter>
+            <Setter Property="Foreground"
+                    Value="#FF1D4476"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Tahoma"></Setter>
+            <Setter Property="Margin"
+                    Value="10"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top"
+                    Background="#12151a">
+            <TextBlock Text="{Binding Path=Time}"
+                       FontSize="48"
+                       Margin="5"
+                       HorizontalAlignment="Center"
+                       FontFamily="MV Boli"
+                       Foreground="#9abfef"></TextBlock>
+
+        </StackPanel>
+
+        <DockPanel DockPanel.Dock="Right"
+                   HorizontalAlignment="Right"
+                   Margin="20">
+            <Button DockPanel.Dock="Bottom"
+                    Width="400"
+                    Background="#FF7E90DE"
+                    Content="Guardar Notas"
+                    Command="{Binding Path=GuardarNotas}" />
+            <TextBlock HorizontalAlignment="Center"
+                       DockPanel.Dock="Top"
+                       Foreground="#292C31"
+                       FontSize="30">NOTAS</TextBlock>
+            <TextBox x:Name="NotasTextBox"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Text="{Binding Path=BlockNotas}"
+                     TextWrapping="WrapWithOverflow"
+                     AcceptsReturn="True"
+                     Margin="3"
+                     Background="#FF45559B"
+                     Foreground="White" />
+        </DockPanel>
+
+        <StackPanel Margin="15"
+                    DockPanel.Dock="Top">
+            <TextBlock  Foreground="#292C31"
+                        HorizontalAlignment="Center"
+                        DockPanel.Dock="Top"
+                        FontSize="30">
+                <Run>INFORMACIÓN DE CONTACTO</Run>
+            </TextBlock>
+
+            <StackPanel>
+                <TextBlock TextAlignment="Center"
+                           FontSize="20">
+                <Run Text="Teléfono de contacto: "></Run>
+                <Run Foreground="White"
+                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=Telefono, Mode=OneWay}"></Run>
+                </TextBlock>
+                <TextBlock TextAlignment="Center"
+                           FontSize="20">
+                <Run Text="Correo electrónico: "></Run>
+                <Run Foreground="White"
+                     Text="{Binding Source={x:Static properties:Settings.Default}, Path=Correo, Mode=OneWay}"></Run>
+                </TextBlock>
+                <TextBlock TextAlignment="Center"
+                           FontSize="20">
+                <Run Text="Horario: "></Run>
+                <Run Foreground="White"
+                     Text="Lunes a Viernes de 9h-21h"></Run>
+                </TextBlock>
+            </StackPanel>
+
+        </StackPanel>
+        <DockPanel Margin="0,10,0,0">
+            <TextBlock  Foreground="#292C31"
+                        HorizontalAlignment="Center"
+                        DockPanel.Dock="Top"
+                        FontSize="30">
+                <Run>EVENTOS HOY </Run>
+                <Run Text="{Binding Path=Fecha}"></Run>
+                <Run Text="("></Run>
+                <Run Foreground="White"
+                     Text="{Binding Path=NumeroEventos}"></Run>
+                <Run Text=")"></Run>
+            </TextBlock>
+            <!--Datagrid-->
+            <ListBox DockPanel.Dock="Left"
+                     Margin="10"
+                     ItemsSource="{Binding Path=ListaEventos}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!--CONTENEDOR EVENTOS-->
+                        <Border BorderThickness="2"
+                                BorderBrush="#292C31"
+                                CornerRadius="3"
+                                Background="#FF87AAC9">
+                            <DockPanel VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch"
+                                       Height="Auto">
+                                <Image DockPanel.Dock="Left"
+                                       Margin="15"
+                                       Visibility="{Binding Path=imagen, Converter={StaticResource ImagenConverter}}"
+                                       Source="{Binding Path=imagen, Converter={StaticResource Imagen2Converter}}"
+                                       Width="230"
+                                       MaxHeight="200"></Image>
+                                <DockPanel HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           Height="Auto"
+                                           MinWidth="400"
+                                           Margin="10">
+                                    <TextBlock x:Name="TituloEventoTextBlock"
+                                               Text="{Binding titulo}"
+                                               FontSize="30"
+                                               DockPanel.Dock="Top"
+                                               FontWeight="Bold"
+                                               Margin="0,10,10,0"
+                                               FontFamily="Verdana"
+                                               Foreground="#292C31" />
+
+
+                                    <TextBlock Text="Descripción del evento:"
+                                               Padding="5"
+                                               TextAlignment="Justify"
+                                               DockPanel.Dock="Top"
+                                               TextWrapping="Wrap"
+                                               FontSize="19"
+                                               Foreground="#292C31"
+                                               FontFamily="Segoe UI Black"
+                                               FontWeight="Bold" />
+
+                                    <TextBlock x:Name="DescripcionEventoTextBlock"
+                                               Text="{Binding descripcion}"
+                                               Padding="5"
+                                               TextAlignment="Justify"
+                                               DockPanel.Dock="Top"
+                                               TextWrapping="Wrap"
+                                               FontSize="17"
+                                               Foreground="#FF1A1C40"
+                                               FontFamily="Segoe UI Black" />
+
+                                </DockPanel>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

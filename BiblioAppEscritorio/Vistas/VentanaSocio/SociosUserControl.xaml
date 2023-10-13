@@ -1,0 +1,291 @@
+﻿<UserControl x:Class="BiblioAppEscritorio.Vistas.SociosUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BiblioAppEscritorio.Vistas" xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="1080"
+             Background="#12151a">
+    <UserControl.Resources>
+        <!--Converters-->
+        <local1:FechaFormatoConverter x:Key="FechaConverter"></local1:FechaFormatoConverter>
+        <local1:VisibilidadBotonEliminarSocioPresamoConverter x:Key="BotonEliminarConverter"></local1:VisibilidadBotonEliminarSocioPresamoConverter>
+        <!--DataGrid Header-->
+        <Style TargetType="syncfusion:GridHeaderCellControl">
+            <Setter Property="Background"
+                    Value="#FF1A1E25" />
+            <Setter Property="Foreground"
+                    Value="#FFA5BBA5" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="17"></Setter>
+        </Style>
+
+        <Style TargetType="syncfusion:GridCell">
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Tahoma"></Setter>
+            <Setter Property="FontSize"
+                    Value="15"></Setter>
+            <Setter Property="Foreground"
+                    Value="#FF1A1E25" />
+            <Setter Property="BorderBrush"
+                    Value="#FF1A1E25"></Setter>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin"
+                    Value="8" />
+            <Setter Property="Width"
+                    Value="160" />
+            <Setter Property="Background"
+                    Value="#c0dcfc"></Setter>
+            <Setter Property="Foreground"
+                    Value="#000"></Setter>
+            <Setter Property="Margin"
+                    Value="8"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="FontSize"
+                    Value="14"></Setter>
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Left"></Setter>
+        </Style>
+
+        <Style x:Key="SocioGridSeleccionado"
+               TargetType="{x:Type Button}"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="IsEnabled"
+                    Value="True" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=SocioGridSeleccionado.socio}"
+                             Value="{x:Null}">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--imágenes de los botones-->
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="Height"
+                    Value="20"></Setter>
+            <Setter Property="Width"
+                    Value="20"></Setter>
+            <Setter Property="Margin"
+                    Value="15,10,10,10"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--rESERVAS Asociados-->
+            <DockPanel Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2">
+                <StackPanel DockPanel.Dock="Right"
+                            VerticalAlignment="Center">
+                    <Button x:Name="RefrescaListaButton"
+                            Command="{Binding Path=RefrescaListaCommand}"
+                            Background="#FFA3BAEC">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <Image Source="/Assets/refrescalistasocio.png" />
+                            <Label VerticalAlignment="Center">Refresca Lista</Label>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="AddLibroButton"
+                            Command="{Binding Path=AddSocioCommand}"
+                            Background="#FFA5D8A5">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <Image Source="/Assets/addsocio.png" />
+                            <Label VerticalAlignment="Center">Añadir Socio</Label>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="EditarLibroButton"
+                            Style="{StaticResource SocioGridSeleccionado}"
+                            Command="{Binding Path=EditarSocioCommand}">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <Image Source="/Assets/editasocio.png" />
+                            <Label VerticalAlignment="Center">Editar Socio</Label>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="EliminarLibroButton"
+                            Style="{StaticResource SocioGridSeleccionado}"
+                            Command="{Binding Path=EliminarSocioCommand}"
+                            IsEnabled="{Binding Path=SocioGridSeleccionado.socio, Converter={StaticResource BotonEliminarConverter}}"
+                            Background="#FFECA3A3">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left">
+                            <Image Source="/Assets/eliminasocio.png" />
+                            <Label VerticalAlignment="Center">Eliminar Socio</Label>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top"
+                               HorizontalAlignment="Center"
+                               Margin="8"
+                               Text="Lista de Socios"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="#9abfef"></TextBlock>
+                    <!--Datagrid-->
+                    <syncfusion:SfDataGrid x:Name="SociosDataGrid"
+                                           ColumnSizer="Star"
+                                           ShowSortNumbers="True"
+                                           AllowFiltering="True"
+                                           RowHeight="45"
+                                           HeaderRowHeight="50"
+                                           ItemsSource="{Binding Path=ListaSociosGrid}"
+                                           SelectedItem="{Binding Path=SocioGridSeleccionado}"
+                                           Foreground="#FF1A1E25"
+                                           Background="#69a5f6">
+
+                        <syncfusion:SfDataGrid.Columns>
+                            <syncfusion:GridTextColumn MappingName="dni"
+                                                       HeaderText="DNI"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.dni}" />
+                            <syncfusion:GridTextColumn MappingName="nombre"
+                                                       HeaderText="Nombre"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.nombre}" />
+                            <syncfusion:GridTextColumn MappingName="apellidos"
+                                                       HeaderText="Apellidos"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.apellidos}" />
+                            <syncfusion:GridTextColumn MappingName="telefono"
+                                                       HeaderText="Teléfono"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.telefono}" />
+                            <syncfusion:GridTextColumn MappingName="correo"
+                                                       HeaderText="Correo"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.correo}" />
+                            <syncfusion:GridTextColumn MappingName="fechaNacimiento"
+                                                       HeaderText="Fecha Nacimiento"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.fechaNacimiento, Converter={StaticResource FechaConverter}}" />
+                            <syncfusion:GridTextColumn MappingName="categoriasInteres"
+                                                       HeaderText="Categorias de Interés"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.categoriasInteres}" />
+                            <syncfusion:GridTextColumn MappingName="direccion"
+                                                       HeaderText="Dirección"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=socio.direccion}" />
+                            <syncfusion:GridTextColumn MappingName="IsActive"
+                                                       HeaderText="IsActive"
+                                                       IsHidden="True"
+                                                       TextAlignment="Center"
+                                                       ValueBinding="{Binding Path=IsActive}" />
+                        </syncfusion:SfDataGrid.Columns>
+                    </syncfusion:SfDataGrid>
+                </DockPanel>
+            </DockPanel>
+
+            <!--rESERVAS Asociados-->
+            <DockPanel Grid.Row="1"
+                       Background="#12151a"
+                       Grid.Column="0">
+                <TextBlock DockPanel.Dock="Top"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Margin="3"
+                           Foreground="#9abfef"
+                           Text="Reservas del Socio"
+                           FontSize="18"></TextBlock>
+                <!--Datagrid-->
+
+                <ListBox Background="#69a5f6"
+                         DockPanel.Dock="Left"
+                         Margin="10"
+                         ItemsSource="{Binding Path=TitulosReservas}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock x:Name="TituloTextBlock"
+                                           Text="{Binding Path=mensaje}"
+                                           FontSize="18"
+                                           TextTrimming="CharacterEllipsis"
+                                           FontWeight="Bold"
+                                           Margin="5"
+                                           TextWrapping="Wrap"
+                                           FontFamily="Verdana"
+                                           Foreground="#FF0F0E32" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </DockPanel>
+
+            <!--Préstamos Asociados-->
+            <DockPanel Grid.Row="1"
+                       Background="#12151a"
+                       Grid.Column="1">
+                <TextBlock DockPanel.Dock="Top"
+                           FontWeight="Bold"
+                           FontSize="18"
+                           HorizontalAlignment="Center"
+                           Margin="3"
+                           Foreground="#9abfef"
+                           Text="Préstamos del Socio">
+                </TextBlock>
+                <!--Datagrid-->
+
+                <ListBox Background="#69a5f6"
+                         DockPanel.Dock="Left"
+                         Margin="10"
+                         ItemsSource="{Binding Path=TitulosPrestamos}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock x:Name="TituloTextBlock"
+                                           Text="{Binding Path=mensaje}"
+                                           FontSize="18"
+                                           TextTrimming="CharacterEllipsis"
+                                           FontWeight="Bold"
+                                           Margin="5"
+                                           TextWrapping="Wrap"
+                                           FontFamily="Verdana"
+                                           Foreground="#FF0F0E32" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+
+
+</UserControl>

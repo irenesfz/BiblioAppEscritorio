@@ -1,0 +1,295 @@
+﻿<Window x:Class="BiblioAppEscritorio.Vistas.DialogoAddSocio"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BiblioAppEscritorio.Vistas"
+        xmlns:inputLayout="clr-namespace:Syncfusion.UI.Xaml.TextInputLayout;assembly=Syncfusion.SfTextInputLayout.WPF"
+        xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Añadir Socio"
+        Height="501"
+        Width="1000"
+        Icon="/Assets/addsocio.png"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <!--CONVERTER-->
+        <local1:Base64ToImageConverter x:Key="ImagenConverter"></local1:Base64ToImageConverter>
+        <!--TextBlock-->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize"
+                    Value="16"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Yu Gothic UI"></Setter>
+            <Setter Property="FontWeight"
+                    Value="SemiBold"></Setter>
+            <Setter Property="Foreground"
+                    Value="Black"></Setter>
+            <Setter Property="Background"
+                    Value="Azure"></Setter>
+            <Setter Property="Margin"
+                    Value="10"></Setter>
+        </Style>
+
+
+        <!--Botones-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin"
+                    Value="8" />
+            <Setter Property="Width"
+                    Value="140" />
+            <Setter Property="Height"
+                    Value="32" />
+            <Setter Property="Background"
+                    Value="#c0dcfc"></Setter>
+            <Setter Property="Foreground"
+                    Value="#000"></Setter>
+            <Setter Property="Margin"
+                    Value="8"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Padding"
+                    Value="4"></Setter>
+            <Setter Property="Width"
+                    Value="140"></Setter>
+            <Setter Property="FontSize"
+                    Value="14"></Setter>
+        </Style>
+        <Style TargetType="{x:Type inputLayout:SfTextInputLayout}">
+            <Setter Property="Margin"
+                    Value="8" />
+            <Setter Property="Width"
+                    Value="320" />
+            <Setter Property="FocusedForeground"
+                    Value="#69A5F6" />
+            <Setter Property="Foreground"
+                    Value="#69A5F6" />
+            <Setter Property="ContainerBackground"
+                    Value="White" />
+            <Setter Property="BorderBrush"
+                    Value="#69A5F6"></Setter>
+        </Style>
+        <Style TargetType="{x:Type syncfusion:DateTimeEdit}">
+            <Setter Property="Margin"
+                    Value="8,0,8,18" />
+            <Setter Property="Width"
+                    Value="320" />
+            <Setter Property="Height"
+                    Value="40"></Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin"
+                    Value="10,5,0,0"></Setter>
+            <Setter Property="FontSize"
+                    Value="17"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Microsoft YaHei"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Foreground"
+                    Value="Black"></Setter>
+        </Style>
+
+
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1"
+                             StartPoint="0.5,0">
+            <GradientStop Color="#FFF9CCCC"
+                          Offset="0" />
+            <GradientStop Color="#FF67A0FF"
+                          Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <StackPanel Margin="10">
+
+        <StackPanel Margin="0,25"
+                    Orientation="Horizontal">
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center">
+                <Image Source="{Binding Path=Imagen, Converter={StaticResource ImagenConverter}, UpdateSourceTrigger=PropertyChanged}"
+                       Height="190"
+                       Margin="10,0"
+                       Width="140" />
+                <Button  Content="Examinar"
+                         Width="130"
+                         HorizontalAlignment="Center"
+                         Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                         FontFamily="Yu Gothic UI"
+                         FontSize="16"
+                         FontWeight="Bold"
+                         Click="ExaminarButton_Click"
+                         Background="#FF073868"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Nombre</TextBlock>
+                        <TextBox Background="Azure"
+                                 Width="200"
+                                 Margin="5"
+                                 MaxLength="15"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="SocioNuevo.nombre"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Apellidos</TextBlock>
+                        <TextBox Background="Azure"
+                                 Margin="5"
+                                 MaxLength="45"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Width="350"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="SocioNuevo.apellidos"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>DNI</TextBlock>
+                        <TextBox Background="Azure"
+                                 Margin="5"
+                                 Width="200"
+                                 MaxLength="11"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="SocioNuevo.dni"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Teléfono</TextBlock>
+                        <TextBox Background="Azure"
+                                 Width="200"
+                                 Margin="5"
+                                 MaxLength="9"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="SocioNuevo.telefono"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Dirección</TextBlock>
+                        <TextBox Background="Azure"
+                                 Margin="5"
+                                 Width="350"
+                                 MaxLength="70"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="SocioNuevo.direccion"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Fecha nacimiento</TextBlock>
+                        <syncfusion:DateTimeEdit x:Name="sfDatePicker"
+                                                 Width="200"
+                                                 Height="50"
+                                                 Margin="5"
+                                                 DateTime="{Binding Path=Fecha}"
+                                                 FontFamily="Yu Gothic UI"
+                                                 BorderBrush="Black"
+                                                 BorderThickness="1"
+                                                 Background="Azure"
+                                                 FontWeight="Bold"
+                                                 FontSize="19" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,10">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Correo electrónico</TextBlock>
+                        <TextBox Background="Azure"
+                                 Margin="5"
+                                 MaxLength="65"
+                                 Width="335"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <TextBox.Text>
+                                <Binding Path="SocioNuevo.correo"
+                                         UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock>Categorías de interés (separadas por '-')</TextBlock>
+
+                        <TextBox Background="Azure"
+                                 Margin="5"
+                                 Width="420"
+                                 MaxLength="100"
+                                 materialDesign:ValidationAssist.Background="Transparent"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Text="{Binding SocioNuevo.categoriasInteres}" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="10"
+                            HorizontalAlignment="Right">
+                    <!--poner codigo de botones-->
+                    <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                            IsCancel="True"
+                            Margin="10"
+                            Width="120"
+                            Click="CancelarButton_Click"
+                            Background="#FFCA53F7">Cancelar</Button>
+                    <Button Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                            IsDefault="True"
+                            Width="120"
+                            Margin="10"
+                            Click="AceptarButton_Click">Aceptar</Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>

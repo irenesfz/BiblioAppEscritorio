@@ -1,0 +1,102 @@
+﻿<Window x:Class="BiblioAppEscritorio.Vistas.DialogoEliminarLibro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BiblioAppEscritorio.Vistas"
+        xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+        mc:Ignorable="d"
+        Title="Eliminar libro"
+        Height="226"
+        Width="600"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        Background="#FF9DD1FF"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/cuidado.ico">
+    <Window.Resources>
+        <!--CONVERTER-->
+        <local1:Base64ToImageConverter x:Key="ImagenConverter"></local1:Base64ToImageConverter>
+        <!--ESTILOS-->
+        <Style TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10" />
+            <Setter Property="Template"
+                    Value="{DynamicResource ButtonControlTemplate1}" />
+            <Setter Property="Padding"
+                    Value="5" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Foreground"
+                    Value="White" />
+        </Style>
+        <Style TargetType="TextBlock"
+               x:Key="InformacionStyle">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="Margin"
+                    Value="10" />
+        </Style>
+        <Style TargetType="TextBlock"
+               x:Key="CamposStyle"
+               BasedOn="{StaticResource InformacionStyle}">
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+        </Style>
+    </Window.Resources>
+    <Grid  Background="#FF9DD1FF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85*" />
+            <ColumnDefinition Width="320*" />
+        </Grid.ColumnDefinitions>
+        <Image Source="{Binding Path=LibroAEliminar.imagen, Converter={StaticResource ImagenConverter}}"
+               Grid.Column="0"
+               Height="160"
+               Width="120"
+               Margin="5"
+               Stretch="Fill" />
+
+        <StackPanel Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Height="158"
+                    Margin="17,10,15,29"
+                    Width="437">
+            <TextBlock  Grid.Column="2"
+                        TextWrapping="Wrap"
+                        TextAlignment="Justify"
+                        Style="{StaticResource CamposStyle}">
+            <Run Text="¿Seguro que desea eliminar este libro así como todas unidades ("></Run>
+            <Run Foreground="Red" Text="{Binding Path=Unidades}"></Run>
+            <Run Text=") que dispone esta biblioteca?"></Run>
+            </TextBlock>
+            <TextBlock Style="{StaticResource CamposStyle}">
+                <Run>Título: </Run>
+                <Run Foreground="Red" Text="{Binding Path=LibroAEliminar.titulo}"></Run>
+            </TextBlock>
+            <TextBlock Style="{StaticResource CamposStyle}">
+                <Run>ISBN: </Run>
+                <Run Foreground="Red" Text="{Binding Path=LibroAEliminar.isbn}"></Run>
+            </TextBlock>
+
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Height="48"
+                    Width="156">
+            <Button x:Name="CancelarButton"
+                    Background="Red"
+                    IsCancel="True">Cancelar</Button>
+            <Button x:Name="AcceptarButton"
+                    IsDefault="True"
+                    Background="Green"
+                    Click="AcceptarButton_Click">Aceptar</Button>
+        </StackPanel>
+    </Grid>
+</Window>
+

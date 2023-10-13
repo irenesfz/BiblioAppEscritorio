@@ -1,0 +1,186 @@
+﻿<Window x:Class="BiblioAppEscritorio.Vistas.Eventos.DialogoEditarEvento"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local1="clr-namespace:BiblioAppEscritorio.Converters"
+        mc:Ignorable="d"
+        Title="Editar Evento"
+        Height="537"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Width="894">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Margin"
+                    Value="10"></Setter>
+
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Margin"
+                    Value="10"></Setter>
+            <Setter Property="Width"
+                    Value="200"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Trebuchet MS"></Setter>
+            <Setter Property="FontSize"
+                    Value="16"></Setter>
+            <Setter Property="Height"
+                    Value="35"></Setter>
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight"
+                    Value="Bold"></Setter>
+            <Setter Property="Margin"
+                    Value="10"></Setter>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"></Setter>
+            <Setter Property="FontFamily"
+                    Value="Trebuchet MS"></Setter>
+            <Setter Property="FontSize"
+                    Value="23"></Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1"
+                             StartPoint="0.5,0">
+            <GradientStop Color="#FFC0CAE0"
+                          Offset="0" />
+            <GradientStop Color="#FF6795F7"
+                          Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85*"></ColumnDefinition>
+            <ColumnDefinition Width="801*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="193*"></RowDefinition>
+            <RowDefinition Height="94*"></RowDefinition>
+            <RowDefinition Height="94*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Título"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Height="25"
+                   Margin="10,15,10,10"></TextBlock>
+        <TextBox Grid.Column="1"
+                 Grid.Row="1"
+                 Margin="10,0,45,0"
+                 Background="Azure"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 TextWrapping="Wrap"
+                 MaxLength="50"
+                 materialDesign:ValidationAssist.Background="Transparent">
+            <TextBox.Text>
+                <Binding Path="EventoAEditar.titulo"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <StackPanel  Grid.Column="1"
+                     HorizontalAlignment="Center"
+                     Orientation="Horizontal"
+                     Grid.Row="0"
+                     Margin="189,0,250,0"
+                     Width="362">
+            <TextBlock Text="Fecha Evento"
+                       Grid.Column="0"
+                       Grid.Row="0"></TextBlock>
+
+            <syncfusion:DateTimeEdit Grid.Column="1"
+                                     Grid.Row="0"
+                                     HorizontalAlignment="Left"
+                                     Margin="10"
+                                     x:Name="sfDatePicker"
+                                     Width="156"
+                                     DateTime="{Binding Path=Fecha}"
+                                     FontSize="20"
+                                     MinDateTime="01/01/1922"
+                                     FontFamily="Yu Gothic UI"
+                                     BorderBrush="Gray"
+                                     BorderThickness="3"
+                                     FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel Grid.Column="0"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2">
+            <TextBlock DockPanel.Dock="Top"
+                       Text="Descripción del evento:"
+                       HorizontalAlignment="Center"></TextBlock>
+
+
+            <TextBox Margin="10"
+                     Background="Azure"
+                     AcceptsReturn="True"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Height="120"
+                     VerticalAlignment="Top"
+                     TextWrapping="Wrap"
+                     MaxLength="1000"
+                     FontSize="14"
+                     materialDesign:ValidationAssist.Background="Transparent">
+                <TextBox.Text>
+                    <Binding Path="EventoAEditar.descripcion"
+                             UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <local1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+        </StackPanel>
+        <StackPanel Grid.Column="0"
+                    Grid.Row="3"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,10,0"
+                    Width="878">
+            <TextBox Grid.Column="1"
+                     Grid.Row="1"
+                     Margin="15"
+                     Height="50"
+                     Background="Azure"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     TextWrapping="Wrap"
+                     Width="600"
+                     Text="{Binding Path=EventoAEditar.imagen}" />
+
+            <Button Background="#FF3966FF"
+                    Height="50"
+                    Margin="10"
+                    Click="Button_Click">EXAMINAR IMAGEN</Button>
+        </StackPanel>
+
+        <Button Grid.Column="1"
+                Grid.Row="4"
+                x:Name="RefrescaListaButton"
+                Background="#FF8466EA"
+                Height="Auto"
+                Margin="214,30,343,30"
+                Width="Auto"
+                Click="EditaButton_Click">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <Image Source="/Assets/editar-evento.png" />
+                <Label VerticalAlignment="Center">EDITAR EVENTO</Label>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BiblioAppEscritorio.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="KeySynfusion" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NjI0MTIyQDMyMzAyZTMxMmUzME0zdGJYSmZlVVBkOWgrYTBPUmtrOG95TTZrL3p5a1lVQ2dldktqTjV1OEU9</Value>
+    </Setting>
+    <Setting Name="BaseURL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://biblioapp.eastus.cloudapp.azure.com:8081/biblioapp/v1/</Value>
+    </Setting>
+    <Setting Name="DatoAdmin" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="UrlLocal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8081/biblioapp/v1/</Value>
+    </Setting>
+    <Setting Name="CadenaConexion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DefaultEndpointsProtocol=https;AccountName=juegopeliculas1;AccountKey=RfGQdJH06PGmviqzFSEmcfPOmId84hS6hqnsdHFywXNRxy7zG05nL9mKWewYsaF1JI/8z+UzAhCkfimv6jBcRg==;EndpointSuffix=core.windows.net</Value>
+    </Setting>
+    <Setting Name="NombreContenedorBlobs" Type="System.String" Scope="User">
+      <Value Profile="(Default)">imagenes</Value>
+    </Setting>
+    <Setting Name="Correo" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">biblioapp22@gmail.com</Value>
+    </Setting>
+    <Setting Name="Telefono" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">+34 000000000</Value>
+    </Setting>
+    <Setting Name="NotasBlock" Type="System.String" Scope="User">
+      <Value Profile="(Default)">nota 1</Value>
+    </Setting>
+    <Setting Name="RutaManual" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Program Files (x86)\BiblioAppEscritorio\InstaladorBiblioAppEscritorio\BiblioApp.chm</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
